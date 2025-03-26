@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "v8oE1+w1mYs=",
+  "success": true,
+  "projectFilePath": "/Users/gokalp/Desktop/projects/others/assesment-net/PhoneDirectory.Tests/PhoneDirectory.Tests.csproj",
+  "expectedPackageFiles": [
+    "/Users/gokalp/.nuget/packages/coverlet.collector/6.0.2/coverlet.collector.6.0.2.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/microsoft.codecoverage/17.11.1/microsoft.codecoverage.17.11.1.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/microsoft.net.test.sdk/17.11.1/microsoft.net.test.sdk.17.11.1.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/microsoft.testplatform.objectmodel/17.11.1/microsoft.testplatform.objectmodel.17.11.1.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/microsoft.testplatform.testhost/17.11.1/microsoft.testplatform.testhost.17.11.1.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/nunit/4.2.2/nunit.4.2.2.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/nunit.analyzers/4.3.0/nunit.analyzers.4.3.0.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/nunit3testadapter/4.6.0/nunit3testadapter.4.6.0.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/system.reflection.metadata/1.6.0/system.reflection.metadata.1.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "vv/quNJGRB0=",
+  "success": true,
+  "projectFilePath": "/Users/gokalp/Desktop/projects/others/assesment-net/PhoneDirectory.API/PhoneDirectory.API.csproj",
+  "expectedPackageFiles": [
+    "/Users/gokalp/.nuget/packages/microsoft.aspnetcore.openapi/9.0.0/microsoft.aspnetcore.openapi.9.0.0.nupkg.sha512",
+    "/Users/gokalp/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
