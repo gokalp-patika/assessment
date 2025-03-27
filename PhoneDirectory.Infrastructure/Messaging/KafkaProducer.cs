@@ -22,17 +22,24 @@ namespace PhoneDirectory.Infrastructure.Messaging
             {
                 BootstrapServers = configuration["Kafka:BootstrapServers"],
                 EnableDeliveryReports = true,
-                Acks = Acks.All
+                Acks = Acks.All,
+                MessageTimeoutMs = 1500,
+                SocketTimeoutMs = 1500,
+                RequestTimeoutMs = 1500
             };
 
-            _producer = new ProducerBuilder<string, string>(config)
-                .SetErrorHandler((_, e) => _logger.LogError($"Kafka error: {e.Reason}"))
-                .Build();
-
-            ValidateConnection();
+            _producer = CreateProducer(config);
         }
 
-        private void ValidateConnection()
+        // Added for testing
+        protected virtual IProducer<string, string> CreateProducer(ProducerConfig config)
+        {
+            return new ProducerBuilder<string, string>(config)
+                .SetErrorHandler((_, e) => _logger.LogError($"Kafka error: {e.Reason}"))
+                .Build();
+        }
+
+        public virtual void ValidateConnection()
         {
             try
             {
@@ -43,8 +50,8 @@ namespace PhoneDirectory.Infrastructure.Messaging
                     Value = "connection-test"
                 };
 
-                var result = _producer.ProduceAsync(TOPIC, testMessage).GetAwaiter().GetResult();
-                _logger.LogInformation($"Successfully connected to Kafka. Test message delivered to {result.Topic} [{result.Partition}]");
+                _producer?.ProduceAsync(TOPIC, testMessage).GetAwaiter().GetResult();
+                _logger.LogInformation($"Successfully connected to Kafka");
             }
             catch (Exception ex)
             {

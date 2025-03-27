@@ -37,14 +37,18 @@ namespace PhoneDirectory.Infrastructure.Messaging
                 EnablePartitionEof = true
             };
 
-            _consumer = new ConsumerBuilder<string, string>(config)
-                .SetErrorHandler((_, e) => _logger.LogError($"Kafka error: {e.Reason}"))
-                .Build();
-
+            _consumer = CreateConsumer(config);
             ValidateConnection();
         }
 
-        private void ValidateConnection()
+        protected virtual IConsumer<string, string> CreateConsumer(ConsumerConfig config)
+        {
+            return new ConsumerBuilder<string, string>(config)
+                .SetErrorHandler((_, e) => _logger.LogError($"Kafka error: {e.Reason}"))
+                .Build();
+        }
+
+        public virtual void ValidateConnection()
         {
             try
             {
@@ -86,6 +90,11 @@ namespace PhoneDirectory.Infrastructure.Messaging
                             _logger.LogInformation("Successfully processed report: {ReportId}", report.Id);
                         }
                     }
+                }
+                catch (OperationCanceledException)
+                {
+                    _consuming = false;
+                    throw;
                 }
                 catch (Exception ex)
                 {
