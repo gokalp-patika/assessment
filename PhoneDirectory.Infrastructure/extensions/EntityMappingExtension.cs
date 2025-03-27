@@ -35,23 +35,37 @@ namespace PhoneDirectory.Infrastructure.Extensions
 
         public static Person? ToDomain(this PersonEntity? entity)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-            
-            return new Person
+            if (entity == null) return null;
+
+            // Create a new person with required properties
+            var person = new Person(
+                firstName: entity.FirstName,
+                lastName: entity.LastName,
+                company: entity.Company
+            );
+
+            // Use reflection to set the Id since it's private
+            typeof(Person).GetProperty("Id")?.SetValue(person, entity.Id);
+
+            // Add contacts if any exist
+            if (entity.Contacts != null)
             {
-                Id = entity.Id,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                Company = entity.Company,
-                Contacts = entity.Contacts
-                    .Select(c => c.ToDomain() ?? throw new InvalidOperationException("Invalid contact mapping"))
-                    .ToList()
-            };
+                foreach (var contact in entity.Contacts)
+                {
+                    var domainContact = contact.ToDomain();
+                    if (domainContact != null)
+                    {
+                        person.Contacts.Add(domainContact);
+                    }
+                }
+            }
+
+            return person;
         }
 
         public static PersonEntity? ToEntity(this Person? domain)
         {
-            if (domain == null) throw new ArgumentNullException(nameof(domain));
+            if (domain == null) return null;
             
             return new PersonEntity
             {
@@ -68,16 +82,20 @@ namespace PhoneDirectory.Infrastructure.Extensions
         public static Report? ToDomain(this ReportEntity? entity)
         {
             if (entity == null) return null;
-            
-            return new Report
-            {
-                Id = entity.Id,
-                RequestedDate = entity.RequestedDate,
-                Status = Enum.Parse<ReportStatus>(entity.Status),
-                Location = entity.Location,
-                PersonCount = entity.PersonCount,
-                PhoneCount = entity.PhoneCount
-            };
+
+            // Create a new report with the location
+            var report = new Report(location: entity.Location);
+
+            // Use reflection to set the private properties
+            typeof(Report).GetProperty("Id")?.SetValue(report, entity.Id);
+            typeof(Report).GetProperty("RequestedDate")?.SetValue(report, entity.RequestedDate);
+
+            // Set the public properties
+            report.Status = Enum.Parse<ReportStatus>(entity.Status);
+            report.PersonCount = entity.PersonCount;
+            report.PhoneCount = entity.PhoneCount;
+
+            return report;
         }
 
         public static ReportEntity? ToEntity(this Report? domain)

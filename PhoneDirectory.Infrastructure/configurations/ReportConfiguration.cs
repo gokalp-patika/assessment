@@ -8,6 +8,10 @@ public class ReportConfiguration : IEntityTypeConfiguration<ReportEntity>
     {
         builder.HasKey(r => r.Id);
         
+        builder.Property(r => r.Id)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("gen_random_uuid()");
+            
         builder.Property(r => r.Status)
             .IsRequired()
             .HasMaxLength(50);
@@ -17,7 +21,8 @@ public class ReportConfiguration : IEntityTypeConfiguration<ReportEntity>
             .HasMaxLength(200);
             
         builder.Property(r => r.RequestedDate)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
             
         builder.Property(r => r.PersonCount)
             .IsRequired();

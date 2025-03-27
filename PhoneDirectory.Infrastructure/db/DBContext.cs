@@ -20,6 +20,9 @@ namespace PhoneDirectory.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
+            // Enable UUID generation
+            modelBuilder.HasPostgresExtension("uuid-ossp");
+
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
             modelBuilder.ApplyConfiguration(new ContactConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfiguration());

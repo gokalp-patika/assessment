@@ -47,7 +47,7 @@ namespace PhoneDirectory.Infrastructure.Repositories
 
         public Report GetById(Guid id)
         {
-            var entity = _dbContext.Reports.FirstOrDefault(r => r.Id == id);
+            var entity = _dbContext.Reports.Find(id);
             if (entity == null) throw new KeyNotFoundException($"Report with ID {id} not found");
             return entity.ToDomain() ?? throw new InvalidOperationException("Failed to map report");
         }
